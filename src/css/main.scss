@@ -1,0 +1,38 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700,900");
+@import "./partials/variables";
+@import "./partials/predefined";
+@import "./partials/animations";
+@import "./partials/text-utils";
+
+* {
+  margin: 0;
+}
+
+html,
+body {
+  font-family: "Roboto", sans-serif;
+  height: 100%;
+  line-height: 19px;
+}
+
+body {
+  background: $color-gray-lighter;
+}
+
+#btn-about {
+  border: 1px dashed $color-yellow;
+  background: rgba(255, 255, 255, 0.3);
+  color: $color-yellow;
+  position: fixed;
+  right: 5px;
+  top: 5px;
+  z-index: 9999;
+
+  &:hover {
+    border-color: $color-blue;
+    color: $color-blue;
+    cursor: pointer;
+    font-weight: bolder;
+  }
+}
+
