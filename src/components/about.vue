@@ -131,4 +131,9 @@ export default {
   height: 90%;
   width: 90%;
 }
+
+ul {
+  list-style-type: circle;
+  padding-left: 40px;
+}
 </style>
