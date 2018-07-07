@@ -1,10 +1,6 @@
 <template lang="pug">
-  #about(@click="close")
-    button.btn-close(@click.stop="close") X
-    .menu(@click.stop="() => {}")
-      button.menu-btn(:class="{ 'active' : show === 'about'}" @click.stop="show = 'about'") About
-      button.menu-btn(:class="{ 'active' : show === 'specs'}" @click.stop="show = 'specs'") Specs
-    .about(v-show="show === 'about'" @click.stop="() => {}")
+  .container
+    .about
       .about-item
         i 我是 KO
         br
@@ -23,13 +19,6 @@
           li css animation/transition
           li scss
           li pug
-      //- .about-item(@click.stop="() => {}")
-      //-   i 由於 F2E 開啟 蟲洞
-      //-   br
-      //-   i 目前我方已被傳送到其他據點
-      //-   br
-      //-   i 等待時機再度回來攻城……
-    iframe.specs(v-show="show === 'specs'" src="../src/static/spec.html")
   </div>
 </template>
 
@@ -40,70 +29,24 @@ export default {
     return {
       show: "about"
     };
-  },
-  methods: {
-    close() {
-      this.$emit("close", false);
-    }
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-#about {
+.container {
   align-items: center;
   border: 1px dotted #fff;
   position: fixed;
   background: rgba(0, 0, 0, 0.95);
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   height: 100%;
   width: 100%;
-  z-index: 99999;
-
-  .menu {
-    display: flex;
-    height: 40px;
-
-    .menu-btn {
-      background: #000;
-      border: none;
-      color: #fff;
-      cursor: pointer;
-      font-size: 20px;
-      height: 100%;
-      padding: 5px 25px;
-
-      &.active {
-        border-bottom: 4px solid #fff;
-        box-sizing: border-box;
-        cursor: default;
-      }
-
-      &:hover:not(.active) {
-        background-color: rgba(255, 255, 255, 0.2);
-        cursor: pointer;
-      }
-    }
-  }
-}
-
-.btn-close {
-  background: #000;
-  border: 1px dashed #fff;
-  color: #fff;
-  font-size: 36px;
-  position: fixed;
-  right: 15px;
-  top: 15px;
-
-  &:hover {
-    border-color: #f5a623;
-    color: #f5a623;
-    cursor: pointer;
-    font-weight: bolder;
-  }
+  z-index: 59999;
 }
 
 .about {
@@ -123,11 +66,6 @@ export default {
     padding: 24px;
     margin-bottom: 10px;
   }
-}
-.specs {
-  border: 1px dashed #f5a623;
-  height: 90%;
-  width: 90%;
 }
 
 ul {

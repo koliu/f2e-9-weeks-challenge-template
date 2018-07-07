@@ -2,20 +2,24 @@
   div
     nav.menu
       router-link(to="/index") Home
+      router-link(to="/spec") Spec
       router-link(to="/about") About
     div
       router-view
 </template>
-<style lang="scss">
+<style lang="scss" scoped>
 .menu {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.9);
+  border: 1px dotted #f5a623;
   display: flex;
   font-size: 20px;
   height: 30px;
   line-height: 30px;
   justify-content: flex-end;
+  position: fixed;
   top: 0;
-  width: 100%;
+  right: 0;
+  // width: 100%;
   z-index: 65535;
 
   a {
@@ -31,6 +35,7 @@
   }
 
   a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
     border-bottom: 4px solid #fff;
   }
 
