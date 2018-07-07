@@ -110,5 +110,6 @@ export default (module = {
     port: process.env.PORT || 28080, // Defaults to 8080
     // open: true // Open the page in browser,
     overlay: true // capturing compilation related warnings and errors
-  }
+  },
+  resolve: { alias: { vue: "vue/dist/vue.js" } }
 });
