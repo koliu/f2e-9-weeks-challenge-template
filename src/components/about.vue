@@ -1,37 +1,35 @@
-﻿<template lang="pug">
+<template lang="pug">
   #about(@click="close")
     button.btn-close(@click.stop="close") X
     .menu(@click.stop="() => {}")
       button.menu-btn(:class="{ 'active' : show === 'about'}" @click.stop="show = 'about'") About
       button.menu-btn(:class="{ 'active' : show === 'specs'}" @click.stop="show = 'specs'") Specs
-      button.menu-btn(:class="{ 'active' : show === 'specs-local'}" @click.stop="show = 'specs-local'") Specs(local)
     .about(v-show="show === 'about'" @click.stop="() => {}")
       .about-item
         i 我是 KO
         br
         i 一個 fullstack 導向的攻城獅
         br
-        i 這裡是攻打 F2E 的第 3 座城堡 -- admin order
+        i 這裡是攻打 F2E 的第 5 座城堡 -- Comic Viewer
         br
-        i 目前攻打的目標： page-home
+        i 目前已攻下： 
+        br
+        i 待進攻： 
         br
         i 採用的武器有
         br
         ul
-          li flexbox
+          li css flex
+          li css animation/transition
           li scss
-          li 樣式與排版分離
-          li vue component
-          li chart.js
-          li webpack
-      .about-item(@click.stop="() => {}")
-        i 由於 F2E 開啟 蟲洞
-        br
-        i 目前我方已被傳送到其他據點
-        br
-        i 等待時機再度回來攻城……
-    iframe.specs(v-if="show === 'specs'" src="https://hexschool.github.io/THE_F2E_Design/week3-admin%20order/")
-    iframe.specs(v-show="show === 'specs-local'" src="../src/static/spec.html")
+          li pug
+      //- .about-item(@click.stop="() => {}")
+      //-   i 由於 F2E 開啟 蟲洞
+      //-   br
+      //-   i 目前我方已被傳送到其他據點
+      //-   br
+      //-   i 等待時機再度回來攻城……
+    iframe.specs(v-show="show === 'specs'" src="../src/static/spec.html")
   </div>
 </template>
 

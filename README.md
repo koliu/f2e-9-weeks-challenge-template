@@ -2,7 +2,7 @@
 
 ---
 
-## [DEMO](https://koliu.github.io/........./dist/)
+## [DEMO](dist/)
 
 ## spec
 
