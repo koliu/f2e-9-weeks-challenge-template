@@ -3,6 +3,8 @@ import CleanWebpackPlugin from "clean-webpack-plugin";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import VueLoaderPlugin from "vue-loader/lib/plugin";
 import webpack from "webpack";
+import CopyWebpackPlugin from 'copy-webpack-plugin';
+import ContentReplacerWebpackPlugin from 'webpack-content-replacer-plugin';
 
 // the path(s) that should be cleaned
 const pathsToClean = [
@@ -26,8 +28,7 @@ export default (module = {
     path: path.resolve(__dirname, "dist")
   },
   module: {
-    rules: [
-      {
+    rules: [{
         test: /\.vue$/,
         loader: "vue-loader"
       },
@@ -40,8 +41,7 @@ export default (module = {
         test: /(\.scss|\.css)$/,
         // 同時使用多個 loader 來解析 css
         // 順序：下(先用) -> 上(後用)
-        use: [
-          {
+        use: [{
             loader: "style-loader" // creates style nodes from JS strings
           },
           {
@@ -93,7 +93,30 @@ export default (module = {
     // for installed from npm
     // new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
     // for built-in moment.js
-    new webpack.IgnorePlugin(/^\.\/locale$/, /js$/)
+    new webpack.IgnorePlugin(/^\.\/locale$/, /js$/),
+
+    new CopyWebpackPlugin([{
+      // Copy src/static to dist/static
+      context: path.resolve(__dirname, "src", "static"),
+      from: '**/*',
+      to: 'static',
+      force: true
+    }], {
+      context: '',
+      copyUnmodified: false,
+      debug: 'debug', // 'debug','warning'
+      ignore: []
+    }),
+    new ContentReplacerWebpackPlugin({
+      modifiedFile: `${path.resolve(__dirname, "dist")}/bundle.js`,
+      modifications: [{
+        regex: /\"\/src\//g,
+        modification: '"',
+      }, {
+        regex: /\.\.\/src\//g,
+        modification: '../dist/',
+      }],
+    })
   ],
   devServer: {
     // Display only errors to reduce the amount of output.
@@ -110,5 +133,10 @@ export default (module = {
     port: process.env.PORT || 28080, // Defaults to 8080
     // open: true // Open the page in browser,
     overlay: true // capturing compilation related warnings and errors
+  },
+  resolve: {
+    alias: {
+      vue: "vue/dist/vue.js"
+    }
   }
 });
