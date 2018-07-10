@@ -4,6 +4,7 @@ import HtmlWebpackPlugin from "html-webpack-plugin";
 import VueLoaderPlugin from "vue-loader/lib/plugin";
 import webpack from "webpack";
 import CopyWebpackPlugin from 'copy-webpack-plugin';
+import ContentReplacerWebpackPlugin from 'webpack-content-replacer-plugin';
 
 // the path(s) that should be cleaned
 const pathsToClean = [
@@ -105,6 +106,16 @@ export default (module = {
       copyUnmodified: false,
       debug: 'debug', // 'debug','warning'
       ignore: []
+    }),
+    new ContentReplacerWebpackPlugin({
+      modifiedFile: `${path.resolve(__dirname, "dist")}/bundle.js`,
+      modifications: [{
+        regex: /\"\/src\//g,
+        modification: '"',
+      }, {
+        regex: /\.\.\/src\//g,
+        modification: '../dist/',
+      }],
     })
   ],
   devServer: {
