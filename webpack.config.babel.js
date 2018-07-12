@@ -4,7 +4,7 @@ import HtmlWebpackPlugin from "html-webpack-plugin";
 import VueLoaderPlugin from "vue-loader/lib/plugin";
 import webpack from "webpack";
 import CopyWebpackPlugin from 'copy-webpack-plugin';
-import ContentReplacerWebpackPlugin from 'webpack-content-replacer-plugin';
+import StringReplacePlugin from 'string-replace-webpack-plugin';
 
 // the path(s) that should be cleaned
 const pathsToClean = [
@@ -30,12 +30,32 @@ export default (module = {
   module: {
     rules: [{
         test: /\.vue$/,
-        loader: "vue-loader"
+        use: [
+          StringReplacePlugin.replace({
+            replacements: [{
+              pattern: /\"\/src\//g,
+              replacement: function (match, p1, offset, string) {
+                return '"';
+              }
+            }],
+          }),
+          {
+            loader: 'vue-loader'
+          }
+        ]
       },
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: "babel-loader" // npm install babel-loader
+        loader: StringReplacePlugin.replace({
+          replacements: [{
+            pattern: /\.\.\/src\//g,
+            replacement: function (match, p1, offset, string) {
+              return '../dist/';
+            }
+          }],
+          prevLoaders: ["babel-loader"]
+        })
       },
       {
         test: /(\.scss|\.css)$/,
@@ -107,16 +127,7 @@ export default (module = {
       debug: 'debug', // 'debug','warning'
       ignore: []
     }),
-    new ContentReplacerWebpackPlugin({
-      modifiedFile: `${path.resolve(__dirname, "dist")}/bundle.js`,
-      modifications: [{
-        regex: /\"\/src\//g,
-        modification: '"',
-      }, {
-        regex: /\.\.\/src\//g,
-        modification: '../dist/',
-      }],
-    })
+    new StringReplacePlugin()
   ],
   devServer: {
     // Display only errors to reduce the amount of output.

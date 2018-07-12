@@ -57,8 +57,9 @@ References:
 
 ### Replace text in files
 
+#### [Webpack content replacer](https://www.npmjs.com/package/webpack-content-replacer-plugin)
+
 ```sh
-# npm i -D webpack-replace-loader
 npm i webpack-content-replacer-plugin -D
 ```
 
@@ -77,4 +78,55 @@ plugins: [
     }],
   })
 ]
+```
+
+#### [string-replace-webpack-plugin
+](https://www.npmjs.com/package/string-replace-webpack-plugin)
+
+> 由於 webpack-content-replacer-plugin 是在產生 bundle.js 後才進行 replace，所以在 watch 時會因為找不到該檔(因為沒有產生 dist)而報錯
+
+```sh
+npm i -D string-replace-webpack-plugin
+```
+
+```js
+import StringReplacePlugin from 'string-replace-webpack-plugin';
+
+module: {
+  rules: [{
+      test: /\.vue$/,
+      use: [
+        StringReplacePlugin.replace({
+          replacements: [{
+            pattern: /\"\/src\//g,
+            replacement: function (match, p1, offset, string) {
+              return '"';
+            }
+          }],
+        }),
+        {
+          loader: 'vue-loader'
+        }
+      ]
+    },
+    {
+      test: /\.js$/,
+      exclude: /node_modules/,
+      loader: StringReplacePlugin.replace({
+        replacements: [{
+          pattern: /\.\.\/src\//g,
+          replacement: function (match, p1, offset, string) {
+            return '../dist/';
+          }
+        }],
+        prevLoaders: ["babel-loader"]
+      })
+    }
+  ]
+},
+plugins: [
+  /* ... */
+
+  new StringReplacePlugin()
+],
 ```

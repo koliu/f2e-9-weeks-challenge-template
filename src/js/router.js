@@ -3,10 +3,10 @@ import About from "../components/about.vue";
 import Spec from "../components/spec.vue";
 
 export default {
-  routes: [
-    {
-      path: "/index",
-      component: Index
+  routes: [{
+      path: "/",
+      component: Index,
+      alias: "/index"
     },
     {
       path: "/spec",
