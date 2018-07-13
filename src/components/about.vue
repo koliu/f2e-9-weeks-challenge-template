@@ -1,4 +1,4 @@
-<template lang="pug">
+﻿<template lang="pug">
   .container
     .about
       .about-item
@@ -19,7 +19,6 @@
           li css animation/transition
           li scss
           li pug
-  </div>
 </template>
 
 <script>

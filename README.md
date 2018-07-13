@@ -9,6 +9,45 @@
 
 ## Note
 
+### 在 Vue 定義全域物件
+
+#### 利用 Vue.prototype
+
+```js
+/* @ main.js */
+import Login from "./login";
+
+Vue.prototype.$login = Login;
+```
+
+這樣就可以在其他 component 中用 this.$login 來使用。
+
+#### 利用 Vue.maxin
+
+```js
+/* @ main.js */
+
+/* custom libs */
+import Navigator from "./my-vue-navigator";
+import Login from "./login";
+
+// Global tool
+Vue.mixin({
+  data() {
+    return {
+      navigator: Navigator,
+      loginManager: Login
+    };
+  },
+  created() {
+    Navigator.context = this;
+  }
+});
+```
+
+這樣就可在其他 component 中直接透過 this.navigator 來使用。
+
+---
 
 ### [Vue warn]: You are using the runtime-only build of Vue where the template compiler is not available. Either pre-compile the templates into render functions, or use the compiler-included build.
 
